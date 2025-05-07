@@ -1,4 +1,4 @@
-from stats import get_num_words, get_num_characters
+from stats import get_num_words, get_num_characters, chars_dict_to_sorted_list
 
 
 def main():
@@ -6,10 +6,9 @@ def main():
     text = get_book_text(book_path)
     words = get_num_words(text)
     characters = get_num_characters(text)
-    print(f"{words} words found in the document")
-    print(characters)
-
-
+    sorted_list = chars_dict_to_sorted_list(characters)
+    print_report(book_path, words, sorted_list)
+    
 
 def get_book_text(path):
     with open(path) as f:
@@ -17,6 +16,22 @@ def get_book_text(path):
 
 
 
+def print_report(book_path, words, sorted_list):
+    
+    # print the report header
+    print("============ BOOKBOT ============\n"
+    f"Analyzing book found at {book_path}...\n"
+    "----------- Word Count ----------\n"
+    f"Found {words} total words\n"
+    "--------- Character Count -------")
+
+    # print sorted aplhabetical characters with their counts
+    for dict in sorted_list:
+        if dict["char"].isalpha():
+            print(f"{dict["char"]}: {dict["num"]}")
+
+    # print the footer
+    print("============= END ===============")
 
 
 
